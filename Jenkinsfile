@@ -44,7 +44,7 @@ pipeline{
         }
         stage("terraform destory"){
             when {
-                expression {params.DELETE}
+                expression {params.DESTROY}
             }
             steps{
                 withCredentials([aws(credentialsId: "aws-creds")]){
