@@ -26,6 +26,7 @@ pipeline{
                 sh '''
                     cd EC2
                     terraform plan
+                '''
                 }
             }
         }
