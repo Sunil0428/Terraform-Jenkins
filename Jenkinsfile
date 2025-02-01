@@ -1,9 +1,8 @@
 pipeline{
     agent any
     parameters {
-        booleanParam(name: 'APPLY', defaultValue: true, description: 'Should terraform apply?')
-        booleanParam(name: 'DESTROY', defaultValue: true, description: 'Should terraform destroy?')
-        choice(name: 'BRANCH', choices: ['main', 'develop', 'feature'], description: 'Branch to build')
+        booleanParam(name: 'APPLY', defaultValue: false, description: 'Should terraform apply?')
+        booleanParam(name: 'DESTROY', defaultValue: false, description: 'Should terraform destroy?')
     }
     environment {
         GIT_REPO_URL = 'https://github.com/Sunil0428/Terraform-Jenkins.git'
