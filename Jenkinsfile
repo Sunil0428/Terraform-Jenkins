@@ -16,30 +16,24 @@ pipeline{
                 git branch: 'main', url: "${GIT_REPO_URL}"
             }
         }
-        stage("terraform init"){
-            if (params.APPLY == 'true')
-            steps{
+        stage("terraform init and plan"){
+            when {
+                expression {params.APPLY}
+            }
+             steps{
                 withCredentials([aws(credentialsId: "aws-creds")]){
                 sh '''
                     cd EC2
                     terraform init
-                '''
-                }
-            }
-        }
-        stage("terraform plan"){
-            if (params.APPLY == 'true')
-            steps{
-                withCredentials([aws(credentialsId: "aws-creds")]){
-                sh '''
-                    cd EC2
                     terraform plan
                 '''
                 }
             }
         }
         stage("terraform apply"){
-            if (params.APPLY == 'true')
+            when {
+                expression {params.APPLY}
+            }
             steps{
                 withCredentials([aws(credentialsId: "aws-creds")]){
                 sh '''
@@ -50,7 +44,9 @@ pipeline{
             }
         }
         stage("terraform destory"){
-            if (params.DESTROY == 'true')
+            when {
+                expression {params.DELETE}
+            }
             steps{
                 withCredentials([aws(credentialsId: "aws-creds")]){
                 sh '''
