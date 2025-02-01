@@ -20,5 +20,14 @@ pipeline{
                 }
             }
         }
+        stage("terraform plan"){
+            steps{
+                withCredentials([aws(credentialsId: "aws-creds")]){
+                sh '''
+                    cd EC2
+                    terraform plan
+                }
+            }
+        }
     }
 }
