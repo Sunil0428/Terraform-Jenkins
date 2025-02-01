@@ -12,7 +12,7 @@ pipeline{
         }
         stage("terraform init"){
             steps{
-             withCredentials([credentialsId: "${AWS_CREDENTIALS_ID}"])
+             withCredentials(credentialsId: "${AWS_CREDENTIALS_ID}")
              sh '''
              cd ../EC2
              terraform init
