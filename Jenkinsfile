@@ -14,7 +14,7 @@ pipeline{
             steps{
                 withCredentials([aws(credentialsId: "aws-creds")]){
                 sh '''
-                    cd ../EC2
+                    cd EC2
                     terraform init
                 '''
                 }
