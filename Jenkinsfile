@@ -12,11 +12,12 @@ pipeline{
         }
         stage("terraform init"){
             steps{
-             withCredentials([aws(credentialsId: "aws-creds")]) 
-             sh '''
-             cd ../EC2
-             terraform init
-             '''
+                withCredentials([aws(credentialsId: "aws-creds")]){
+                sh '''
+                    cd ../EC2
+                    terraform init
+                '''
+                }
             }
         }
     }
