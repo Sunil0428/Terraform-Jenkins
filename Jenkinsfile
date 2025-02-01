@@ -30,5 +30,15 @@ pipeline{
                 }
             }
         }
+        stage("terraform apply"){
+            steps{
+                withCredentials([aws(credentialsId: "aws-creds")]){
+                sh '''
+                    cd EC2
+                    terraform apply -auto-approve
+                '''
+                }
+            }
+        }
     }
 }
