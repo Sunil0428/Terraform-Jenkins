@@ -40,5 +40,15 @@ pipeline{
                 }
             }
         }
+        stage("terraform destory"){
+            steps{
+                withCredentials([aws(credentialsId: "aws-creds")]){
+                sh '''
+                    cd EC2
+                    terraform destroy -auto-approve
+                '''
+                }
+            }
+        }
     }
 }
