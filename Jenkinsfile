@@ -1,8 +1,14 @@
 pipeline{
     agent any
+    parameters {
+        booleanParam(name: 'APPLY', defaultValue: true, description: 'Should terraform apply?')
+        booleanParam(name: 'DESTROY', defaultValue: true, description: 'Should terraform destroy?')
+        choice(name: 'BRANCH', choices: ['main', 'develop', 'feature'], description: 'Branch to build')
+    }
     environment {
         GIT_REPO_URL = 'https://github.com/Sunil0428/Terraform-Jenkins.git'
     }
+
     stages{
         stage('Checking out code'){
             steps{
@@ -11,6 +17,7 @@ pipeline{
             }
         }
         stage("terraform init"){
+            if (params.APPLY == 'true')
             steps{
                 withCredentials([aws(credentialsId: "aws-creds")]){
                 sh '''
@@ -21,6 +28,7 @@ pipeline{
             }
         }
         stage("terraform plan"){
+            if (params.APPLY == 'true')
             steps{
                 withCredentials([aws(credentialsId: "aws-creds")]){
                 sh '''
@@ -31,6 +39,7 @@ pipeline{
             }
         }
         stage("terraform apply"){
+            if (params.APPLY == 'true')
             steps{
                 withCredentials([aws(credentialsId: "aws-creds")]){
                 sh '''
@@ -41,6 +50,7 @@ pipeline{
             }
         }
         stage("terraform destory"){
+            if (params.DESTROY == 'true')
             steps{
                 withCredentials([aws(credentialsId: "aws-creds")]){
                 sh '''
